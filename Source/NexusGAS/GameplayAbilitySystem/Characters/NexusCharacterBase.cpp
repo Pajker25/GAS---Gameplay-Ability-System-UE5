@@ -5,6 +5,7 @@
 
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "NexusGAS/GameplayAbilitySystem/AttributeSets/AssignmentAttributeSet.h"
 #include "NexusGAS/GameplayAbilitySystem/AttributeSets/BasicAttributeSet.h"
 
 // Sets default values
@@ -39,6 +40,9 @@ ANexusCharacterBase::ANexusCharacterBase()
 	
 	// Add the basic attribute set
 	BasicAttributeSet = CreateDefaultSubobject<UBasicAttributeSet>(TEXT("BasicAttributeSet"));
+	
+	// Add the assignment attribute set
+	AssignmentAttributeSet = CreateDefaultSubobject<UAssignmentAttributeSet>(TEXT("AssignmentAttributeSet"));
 }
 
 // Called when the game starts or when spawned
