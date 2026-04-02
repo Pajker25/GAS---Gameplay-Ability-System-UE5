@@ -30,6 +30,9 @@ public:
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AbilitySysyem")
 	EGameplayEffectReplicationMode ASCReplicationMode = EGameplayEffectReplicationMode::Mixed;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AbilitySysyem")
+	TArray<TSubclassOf<UGameplayAbility>> StartingAbilities;
 
 protected:
 	// Called when the game starts or when spawned
@@ -47,4 +50,13 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	
 	virtual UAbilitySystemComponent * GetAbilitySystemComponent() const override;
+	
+	UFUNCTION(BlueprintCallable, Category = "Ability System")
+	TArray<FGameplayAbilitySpecHandle> GrantAbilities(TArray<TSubclassOf<UGameplayAbility>> AbilitiesToGrant);
+	
+	UFUNCTION(BlueprintCallable, Category = "Ability System")
+	void RemoveAbilities(TArray<FGameplayAbilitySpecHandle> AbilitiesHandlesToRemove);
+	
+	UFUNCTION(BlueprintCallable, Category = "Ability System")
+	void SendAbilitiesChangedEvent();
 };
