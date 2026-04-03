@@ -59,4 +59,7 @@ public:
 	
 	UFUNCTION(BlueprintCallable, Category = "Ability System")
 	void SendAbilitiesChangedEvent();
+	
+	UFUNCTION(Server, Reliable, BlueprintCallable, Category = "Ability System")
+	void ServerSendGameplayEventToSelf(FGameplayEventData EventData);
 };
