@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "BasicAttributeSet.h"
+#include "AttributeSet.h"
 #include "AbilitySystemComponent.h"
 #include "AssignmentAttributeSet.generated.h"
 
@@ -11,7 +11,7 @@
  * 
  */
 UCLASS()
-class NEXUSGAS_API UAssignmentAttributeSet : public UBasicAttributeSet
+class NEXUSGAS_API UAssignmentAttributeSet : public UAttributeSet
 {
 	GENERATED_BODY()
 	

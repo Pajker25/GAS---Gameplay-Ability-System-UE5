@@ -44,7 +44,7 @@ ANexusCharacterBase::ANexusCharacterBase()
 	BasicAttributeSet = CreateDefaultSubobject<UBasicAttributeSet>(TEXT("BasicAttributeSet"));
 	
 	// Add the assignment attribute set
-	AssignmentAttributeSet = CreateDefaultSubobject<UAssignmentAttributeSet>(TEXT("AssignmentAttributeSet"));
+	//AssignmentAttributeSet = CreateDefaultSubobject<UAssignmentAttributeSet>(TEXT("AssignmentAttributeSet"));
 }
 
 // Called when the game starts or when spawned

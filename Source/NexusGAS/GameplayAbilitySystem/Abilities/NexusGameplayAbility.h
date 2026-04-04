@@ -15,6 +15,9 @@ class NEXUSGAS_API UNexusGameplayAbility : public UGameplayAbility
 	GENERATED_BODY()
 	
 public:
+	
+	UNexusGameplayAbility();
+	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "UI")
 	bool ShouldShowInAbilitiesBar = false;
 };

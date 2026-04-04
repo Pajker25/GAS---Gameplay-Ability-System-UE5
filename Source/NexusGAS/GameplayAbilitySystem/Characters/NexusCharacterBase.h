@@ -24,8 +24,8 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AbilitySysyem")
 	class UBasicAttributeSet* BasicAttributeSet;
 	
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AbilitySysyem")
-	class UBasicAttributeSet* AssignmentAttributeSet;
+	//UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AbilitySysyem")
+	//class UAssignmentAttributeSet* AssignmentAttributeSet;
 	
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AbilitySysyem")

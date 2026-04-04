@@ -2,7 +2,6 @@
 
 
 #include "AssignmentAttributeSet.h"
-
 #include "Net/UnrealNetwork.h"
 
 UAssignmentAttributeSet::UAssignmentAttributeSet()
