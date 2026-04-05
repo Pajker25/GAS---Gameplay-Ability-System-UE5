@@ -19,4 +19,8 @@ Content/Fab/
 Content/Animations/
 Content/Weapons/Meshes/
 Content/MSPresets/
-Content/FreeMagic/
+Content/Free_Magic/
+*.DotSettings.user
+.idea/
+Content/__ExternalActors__/
+Content/__ExternalObjects__/
