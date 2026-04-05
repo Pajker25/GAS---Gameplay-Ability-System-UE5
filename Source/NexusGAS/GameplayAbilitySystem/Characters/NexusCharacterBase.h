@@ -33,6 +33,9 @@ protected:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AbilitySysyem")
 	TArray<TSubclassOf<UGameplayAbility>> StartingAbilities;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Visuals")
+	class UMaterialInterface* ShieldOverlayMaterial;
 
 protected:
 	// Called when the game starts or when spawned
@@ -46,6 +49,8 @@ protected:
 	
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Damage")
 	void HandleDeath();
+	
+	virtual void OnShieldAttributeChanged(const FOnAttributeChangeData& Data);
 
 public:	
 	// Called every frame

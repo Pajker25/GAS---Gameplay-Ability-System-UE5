@@ -11,6 +11,9 @@ UBasicAttributeSet::UBasicAttributeSet()
 	MaxHealth = 100.f;
 	Stamina = 100.f;
 	MaxStamina = 100.f;	
+	Damage = 0.f;
+	Shield = 0.f;
+	MaxShield = 100.f;
 }
 
 void UBasicAttributeSet::GetLifetimeReplicatedProps(TArray<class FLifetimeProperty>& OutLifetimeProps) const
@@ -34,15 +37,38 @@ void UBasicAttributeSet::PreAttributeChange(const FGameplayAttribute& Attribute,
 	{
 		NewValue = FMath::Clamp(NewValue, 0.f, GetMaxStamina());
 	}
+	else if (Attribute == GetShieldAttribute())
+	{
+		NewValue = FMath::Clamp(NewValue, 0.f, GetMaxShield());
+	}
+	
 }
 
 void UBasicAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data)
 {
 	Super::PostGameplayEffectExecute(Data);
 	
-	if (Data.EvaluatedData.Attribute == GetHealthAttribute())
+	if (Data.EvaluatedData.Attribute == GetDamageAttribute())
 	{
-		SetHealth(GetHealth());
+		float TotalDamage = GetDamage();
+		SetDamage(0.f);
+		
+		float CurrentShield = GetShield();
+		if (CurrentShield > 0.f)
+		{
+			SetShield(CurrentShield - TotalDamage);
+			float RemainingDamage = TotalDamage - CurrentShield;
+			if (RemainingDamage > 0.f)
+			{
+				SetHealth(GetHealth() - RemainingDamage);
+			}
+		}
+		else
+		{
+			SetHealth(GetHealth()-TotalDamage);
+		}
+		
+		
 		
 		if (Data.EffectSpec.Def->GetAssetTags().HasTag(FGameplayTag::RequestGameplayTag("Effects.HitReaction")) 
 			&& Data.EvaluatedData.Magnitude != 0.f)
@@ -51,7 +77,11 @@ void UBasicAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallb
 			HitReactionTagsContainer.AddTag(FGameplayTag::RequestGameplayTag("GameplayAbility.HitReaction"));
 			GetOwningAbilitySystemComponent()->TryActivateAbilitiesByTag(HitReactionTagsContainer);
 		}
-		
+	}
+	
+	if (Data.EvaluatedData.Attribute == GetHealthAttribute())
+	{
+		SetHealth(GetHealth());	
 	}
 	else if (Data.EvaluatedData.Attribute == GetStaminaAttribute())
 	{
@@ -68,5 +98,9 @@ void UBasicAttributeSet::PostAttributeChange(const FGameplayAttribute& Attribute
 		FGameplayTagContainer DeathAbilityTagsContainer;
 		DeathAbilityTagsContainer.AddTag(FGameplayTag::RequestGameplayTag("GameplayAbility.Death"));
 		GetOwningAbilitySystemComponent()->TryActivateAbilitiesByTag(DeathAbilityTagsContainer);
+	}
+	if (Attribute == GetShieldAttribute() && NewValue > 0.f)
+	{
+		
 	}
 }

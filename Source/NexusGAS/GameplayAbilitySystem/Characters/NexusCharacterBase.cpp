@@ -54,6 +54,31 @@ void ANexusCharacterBase::BeginPlay()
 	
 	AbilitySystemComponent->RegisterGameplayTagEvent(FGameplayTag::RequestGameplayTag("State.Dead"))
 	.AddUObject(this, &ANexusCharacterBase::OnDeadTagChanged);
+	
+	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(UBasicAttributeSet::GetShieldAttribute())
+	.AddUObject(this, &ANexusCharacterBase::OnShieldAttributeChanged);
+	
+}
+
+void ANexusCharacterBase::OnShieldAttributeChanged(const FOnAttributeChangeData& Data)
+{
+	if (GetMesh())
+	{
+		// Data.NewValue gives us the current shield amount
+		if (Data.NewValue > 0.f)
+		{
+			// Only set it if it's not already set to avoid flickering/redundant calls
+			if (GetMesh()->GetOverlayMaterial() != ShieldOverlayMaterial)
+			{
+				GetMesh()->SetOverlayMaterial(ShieldOverlayMaterial);
+			}
+		}
+		else
+		{
+			// Clear the overlay if shield is 0 or less
+			GetMesh()->SetOverlayMaterial(nullptr);
+		}
+	}
 }
 
 // Called every frame
