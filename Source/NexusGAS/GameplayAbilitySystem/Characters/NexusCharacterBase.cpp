@@ -44,7 +44,7 @@ ANexusCharacterBase::ANexusCharacterBase()
 	BasicAttributeSet = CreateDefaultSubobject<UBasicAttributeSet>(TEXT("BasicAttributeSet"));
 	
 	// Add the assignment attribute set
-	//AssignmentAttributeSet = CreateDefaultSubobject<UAssignmentAttributeSet>(TEXT("AssignmentAttributeSet"));
+	//AssignmentAttributeSet = CreateDefaultSubobject<UAssignmentAttributeSet>(TEXT("AssignmentAttributeSet"));	
 }
 
 // Called when the game starts or when spawned
@@ -52,6 +52,8 @@ void ANexusCharacterBase::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	AbilitySystemComponent->RegisterGameplayTagEvent(FGameplayTag::RequestGameplayTag("State.Dead"))
+	.AddUObject(this, &ANexusCharacterBase::OnDeadTagChanged);
 }
 
 // Called every frame
@@ -143,5 +145,25 @@ void ANexusCharacterBase::SendAbilitiesChangedEvent()
 void ANexusCharacterBase::ServerSendGameplayEventToSelf_Implementation(FGameplayEventData EventData)
 {
 	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(this, EventData.EventTag, EventData);
+}
+
+void ANexusCharacterBase::HandleDeath_Implementation()
+{
+	GetMesh()->SetSimulatePhysics(true);
+	GetMesh()->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	GetCharacterMovement()->DisableMovement();
+	
+	FVector Impulse = GetActorForwardVector() * -20000;
+	Impulse.Z = 15000;
+	GetMesh()->AddImpulseAtLocation(Impulse, GetActorLocation());
+}
+
+void ANexusCharacterBase::OnDeadTagChanged(const FGameplayTag, int32 NewCount)
+{
+	if (NewCount > 0)
+	{
+		HandleDeath();
+	}
 }
 

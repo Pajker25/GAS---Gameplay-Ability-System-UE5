@@ -57,3 +57,15 @@ void UBasicAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallb
 		SetStamina(GetStamina());
 	}
 }
+
+void UBasicAttributeSet::PostAttributeChange(const FGameplayAttribute& Attribute, float OldValue, float NewValue)
+{
+	Super::PostAttributeChange(Attribute, OldValue, NewValue);
+	
+	if (Attribute == GetHealthAttribute() && NewValue <= 0.f)
+	{
+		FGameplayTagContainer DeathAbilityTagsContainer;
+		DeathAbilityTagsContainer.AddTag(FGameplayTag::RequestGameplayTag("GameplayAbility.Death"));
+		GetOwningAbilitySystemComponent()->TryActivateAbilitiesByTag(DeathAbilityTagsContainer);
+	}
+}
