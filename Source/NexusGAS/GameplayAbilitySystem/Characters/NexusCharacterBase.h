@@ -27,6 +27,9 @@ public:
 	//UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AbilitySysyem")
 	//class UAssignmentAttributeSet* AssignmentAttributeSet;
 	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AbilitySysyem")
+	class UCombatAttributeSet* CombatAttributeSet;
+	
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AbilitySysyem")
 	EGameplayEffectReplicationMode ASCReplicationMode = EGameplayEffectReplicationMode::Mixed;

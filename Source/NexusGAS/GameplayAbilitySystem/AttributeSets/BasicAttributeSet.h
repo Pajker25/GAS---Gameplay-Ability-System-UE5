@@ -51,7 +51,7 @@ public:
 	FGameplayAttributeData MaxShield;
 	ATTRIBUTE_ACCESSORS_BASIC(UBasicAttributeSet, MaxShield);
 
-public:
+protected:
 	UFUNCTION()
 	void OnRep_Health(const FGameplayAttributeData& OldValue) const
 	{

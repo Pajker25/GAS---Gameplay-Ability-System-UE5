@@ -9,6 +9,7 @@
 #include "AbilitySystemBlueprintLibrary.h"
 #include "NexusGAS/GameplayAbilitySystem/NexusAbilitySystemComponent.h"
 #include "NexusGAS/GameplayAbilitySystem/AttributeSets/BasicAttributeSet.h"
+#include "NexusGAS/GameplayAbilitySystem/AttributeSets/CombatAttributeSet.h"
 
 // Sets default values
 ANexusCharacterBase::ANexusCharacterBase()
@@ -45,6 +46,8 @@ ANexusCharacterBase::ANexusCharacterBase()
 	
 	// Add the assignment attribute set
 	//AssignmentAttributeSet = CreateDefaultSubobject<UAssignmentAttributeSet>(TEXT("AssignmentAttributeSet"));	
+	
+	CombatAttributeSet = CreateDefaultSubobject<UCombatAttributeSet>(TEXT("CombatAttributeSet"));
 }
 
 // Called when the game starts or when spawned
