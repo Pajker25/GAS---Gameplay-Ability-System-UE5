@@ -3,6 +3,8 @@
 
 #include "NexusGameplayAbility.h"
 
+
+
 UNexusGameplayAbility::UNexusGameplayAbility()
 {
 	ActivationOwnedTags.AddTag(FGameplayTag::RequestGameplayTag(FName("GameplayAbility.Active")));

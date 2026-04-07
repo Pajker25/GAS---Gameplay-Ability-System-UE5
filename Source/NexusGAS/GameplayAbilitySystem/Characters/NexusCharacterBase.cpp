@@ -8,6 +8,7 @@
 #include "NexusGAS/GameplayAbilitySystem/AttributeSets/AssignmentAttributeSet.h"
 #include "AbilitySystemBlueprintLibrary.h"
 #include "NexusGAS/GameplayAbilitySystem/NexusAbilitySystemComponent.h"
+#include "NexusGAS/GameplayAbilitySystem/Abilities/NexusGameplayAbility.h"
 #include "NexusGAS/GameplayAbilitySystem/AttributeSets/BasicAttributeSet.h"
 #include "NexusGAS/GameplayAbilitySystem/AttributeSets/CombatAttributeSet.h"
 
@@ -59,8 +60,7 @@ void ANexusCharacterBase::BeginPlay()
 	.AddUObject(this, &ANexusCharacterBase::OnDeadTagChanged);
 	
 	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(UBasicAttributeSet::GetShieldAttribute())
-	.AddUObject(this, &ANexusCharacterBase::OnShieldAttributeChanged);
-	
+	.AddUObject(this, &ANexusCharacterBase::OnShieldAttributeChanged);	
 }
 
 void ANexusCharacterBase::OnShieldAttributeChanged(const FOnAttributeChangeData& Data)
@@ -136,8 +136,13 @@ TArray<FGameplayAbilitySpecHandle> ANexusCharacterBase::GrantAbilities(
 	
 	for (TSubclassOf<UGameplayAbility> Ability : AbilitiesToGrant)
 	{
+		int32 InputID = -1;
+		if (const UNexusGameplayAbility* NexusAbilityCDO = GetDefault<UNexusGameplayAbility>(Ability))
+		{
+			InputID = static_cast<int32>(NexusAbilityCDO->AbilityInputID);
+		}
 		FGameplayAbilitySpecHandle SpecHandle = AbilitySystemComponent->GiveAbility(FGameplayAbilitySpec(
-			Ability, 1, -1, this
+			Ability, 1, InputID, this
 			));
 		AbilityHandles.Add(SpecHandle);
 	}
