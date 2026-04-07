@@ -125,7 +125,7 @@ UAbilitySystemComponent* ANexusCharacterBase::GetAbilitySystemComponent() const
 }
 
 TArray<FGameplayAbilitySpecHandle> ANexusCharacterBase::GrantAbilities(
-	TArray<TSubclassOf<UGameplayAbility>> AbilitiesToGrant)
+	TArray<TSubclassOf<UGameplayAbility>> AbilitiesToGrant, const int32 Level)
 {
 	if (!AbilitySystemComponent || !HasAuthority())
 	{
@@ -144,7 +144,7 @@ TArray<FGameplayAbilitySpecHandle> ANexusCharacterBase::GrantAbilities(
 			ShouldActivate = NexusAbilityCDO->AutoActivateWhenGranted;
 		}
 		FGameplayAbilitySpecHandle SpecHandle = AbilitySystemComponent->GiveAbility(FGameplayAbilitySpec(
-			Ability, 1, InputID, this
+			Ability, Level, InputID, this
 			));
 		AbilityHandles.Add(SpecHandle);
 		

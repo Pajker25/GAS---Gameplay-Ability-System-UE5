@@ -65,7 +65,7 @@ public:
 	virtual UAbilitySystemComponent * GetAbilitySystemComponent() const override;
 	
 	UFUNCTION(BlueprintCallable, Category = "Ability System")
-	TArray<FGameplayAbilitySpecHandle> GrantAbilities(TArray<TSubclassOf<UGameplayAbility>> AbilitiesToGrant);
+	TArray<FGameplayAbilitySpecHandle> GrantAbilities(TArray<TSubclassOf<UGameplayAbility>> AbilitiesToGrant, int32 Level = 1);
 	
 	UFUNCTION(BlueprintCallable, Category = "Ability System")
 	void RemoveAbilities(TArray<FGameplayAbilitySpecHandle> AbilitiesHandlesToRemove);
