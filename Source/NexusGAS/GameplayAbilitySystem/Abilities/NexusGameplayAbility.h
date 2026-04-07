@@ -32,6 +32,9 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "UI")
 	bool ShouldShowInAbilitiesBar = false;
 	
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Activation")
+	bool AutoActivateWhenGranted = false;
+	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Input")
 	EAbilityInputID AbilityInputID = EAbilityInputID::None;
 	

@@ -137,14 +137,21 @@ TArray<FGameplayAbilitySpecHandle> ANexusCharacterBase::GrantAbilities(
 	for (TSubclassOf<UGameplayAbility> Ability : AbilitiesToGrant)
 	{
 		int32 InputID = -1;
+		bool ShouldActivate = false;
 		if (const UNexusGameplayAbility* NexusAbilityCDO = GetDefault<UNexusGameplayAbility>(Ability))
 		{
 			InputID = static_cast<int32>(NexusAbilityCDO->AbilityInputID);
+			ShouldActivate = NexusAbilityCDO->AutoActivateWhenGranted;
 		}
 		FGameplayAbilitySpecHandle SpecHandle = AbilitySystemComponent->GiveAbility(FGameplayAbilitySpec(
 			Ability, 1, InputID, this
 			));
 		AbilityHandles.Add(SpecHandle);
+		
+		if (ShouldActivate)
+		{
+			AbilitySystemComponent->TryActivateAbility(SpecHandle);
+		}
 	}
 	
 	SendAbilitiesChangedEvent();
